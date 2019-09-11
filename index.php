@@ -1,3 +1,30 @@
+<?php 
+require_once "config.php";
+?>
+
+<?php
+if(isset($_POST{["submit"]})){
+   
+    
+    $username=$_POST['username'];
+    $password=$_POST['password'];
+    $email= $_POST['email'];
+    $phone_number=$_POST['phone_number']; 
+
+    $sql = "select * from users where username= :username and password= :password ";
+    $statement = $connection->prepare($sql);
+    $statement->execute([':username' => $username, ':password' => $password]);
+    $users = $statement->fetchAll(PDO::FETCH_OBJ);
+
+
+}
+
+    
+    
+  
+   
+
+?>
 <html>
 <head>
     <style>
@@ -61,12 +88,16 @@
 <h1> Instructions </h1>
 <ul>
        <li>Create a database called myapplication.</li>
+       
+
        <li>Create a table called users. (Id,username,password,email,phone_number). Those fields should have the right datatype and right size.
+
        <li>Connect the form to the database, When the user insert the information in the registration form, those information should stored in the database.</li>
+
        <li>After submission, the page should be redirect to new page.</li>
        <li>The new page should display, "Hello (username)" </li>
 </ul>
-<form>
+<form method="post">
     <div class="container">
         <h1>Register</h1>
         <p>Please fill in this form to create an account.</p>
@@ -89,7 +120,7 @@
         <hr>
 
         <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
-        <button type="submit" class="registerbtn">Register</button>
+        <button type="submit" class="registerbtn" name="submit" id="submit" >Register</button>
     </div>
 
     <div class="container signin">
